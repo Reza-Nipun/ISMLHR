@@ -368,7 +368,7 @@ if ($present_total == 0)
 
 		$toemail= array('ahasan-interfab@viyellatexgroup.com', 'moazzem.huq@interfabshirt.com');
 
-		$cc_mail_list = array('amir.hasanat@viyellatexgroup.com', 'umar.abdullah@viyellatexgroup.com', 'ali.hossain@interfabshirt.com', 'nesar.ahmed@interfabshirt.com', 'dinendra.sanjeewa@interfabshirt.com', 'arif.abdulla@interfabshirt.com', 'masud.uddin@interfabshirt.com', 'nazrul.chowdhury@interfabshirt.com', 'monirul.islam@interfabshirt.com', 'mamun.hossain@interfabshirt.com', 'swapna.kundu@interfabshirt.com');
+		$cc_mail_list = array('amir.hasanat@viyellatexgroup.com', 'umar.abdullah@viyellatexgroup.com', 'ali.hossain@interfabshirt.com', 'nesar.ahmed@interfabshirt.com', 'arif.abdulla@interfabshirt.com', 'masud.uddin@interfabshirt.com', 'nazrul.chowdhury@interfabshirt.com', 'monirul.islam@interfabshirt.com', 'mamun.hossain@interfabshirt.com', 'swapna.kundu@interfabshirt.com');
 
 		$bcc_mail_list = array('nipun.sarker@interfabshirt.com', 'ecofab.itsupport@interfabshirt.com', 'ecofab.hr@interfabshirt.com');
 

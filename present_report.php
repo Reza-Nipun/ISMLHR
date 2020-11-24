@@ -249,8 +249,22 @@ $result_4 = mssql_query($SQL_4);
                         <td><?php echo $row['Floor'];?></td>
                         <td><?php echo $row['Department'];?></td>
                         <td><?php echo $row['Line Info'];?></td>
-                        <td><?php echo $min_attendant_time;?></td>
-                        <td><?php echo $max_attendant_time;?></td>
+                        <td
+                            <?php if ( strstr( $min_attendant_time, 'PM' ) ) { ?>
+                                style="background-color: yellow";
+                            <?php } ?>>
+
+                            <?php echo $min_attendant_time;?>
+
+                        </td>
+                        <td
+                            <?php if ( strstr( $max_attendant_time, 'AM' ) ) { ?>
+                                style="background-color: yellow";
+                            <?php } ?>>
+
+							<?php echo $max_attendant_time;?>
+
+						</td>
                         <td>
                             <?php
 
