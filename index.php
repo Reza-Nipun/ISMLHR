@@ -148,7 +148,20 @@ if(isset($unit)){
 //    $date = date('Y-m-d', strtotime($year . '-' . $month . '-' . $day));
 
     $SQL_PRESENT1 = "SELECT t1.*, t2.ms_sum, t3.nms_sum 
-                FROM (SELECT DAY(DeviceRowData.WorkDate) as day, MONTH(DeviceRowData.WorkDate) as month, YEAR(DeviceRowData.WorkDate) as year, 
+                FROM 
+                (SELECT DAY(DeviceRowData.WorkDate) as day, MONTH(DeviceRowData.WorkDate) as month, YEAR(DeviceRowData.WorkDate) as year, 
+                COUNT(DISTINCT DeviceRowData.EmployeeCode) AS fw_sum, EmployeePIMSinfo.[Staff Category] as sc 
+                FROM 
+                (SELECT DISTINCT EmployeeCode, WorkDate FROM DeviceRowData) AS DeviceRowData
+                INNER JOIN
+                EmployeePIMSinfo
+                ON EmployeePIMSinfo.EmployeeCode=DeviceRowData.EmployeeCode 
+                WHERE EmployeePIMSinfo.Unit='$unit' AND EmployeePIMSinfo.EmployeeStatus IN ('Active', 'ACTIVE') 
+                AND DeviceRowData.WorkDate= '$date'
+                GROUP BY EmployeePIMSinfo.[Staff Category], DeviceRowData.WorkDate) as t0
+                
+                LEFT JOIN
+                (SELECT DAY(DeviceRowData.WorkDate) as day, MONTH(DeviceRowData.WorkDate) as month, YEAR(DeviceRowData.WorkDate) as year, 
                 COUNT(DISTINCT DeviceRowData.EmployeeCode) AS fw_sum, EmployeePIMSinfo.[Staff Category] as sc 
                 FROM 
                 (SELECT DISTINCT EmployeeCode, WorkDate FROM DeviceRowData) AS DeviceRowData
@@ -159,6 +172,7 @@ if(isset($unit)){
                 AND DeviceRowData.WorkDate= '$date'
                 AND EmployeePIMSinfo.[Staff Category]='FW'
                 GROUP BY EmployeePIMSinfo.[Staff Category], DeviceRowData.WorkDate) as t1
+                ON t0.day=t1.day
                 
                 LEFT JOIN
                 (SELECT DAY(DeviceRowData.WorkDate) as day, MONTH(DeviceRowData.WorkDate) as month, YEAR(DeviceRowData.WorkDate) as year, 
@@ -171,7 +185,7 @@ if(isset($unit)){
                 AND DeviceRowData.WorkDate= '$date'
                 AND EmployeePIMSinfo.[Staff Category]='MS'
                 GROUP BY EmployeePIMSinfo.[Staff Category], DeviceRowData.WorkDate) as t2
-                ON t1.day=t2.day
+                ON t0.day=t2.day
                 
                 LEFT JOIN
                 (SELECT DAY(DeviceRowData.WorkDate) as day, MONTH(DeviceRowData.WorkDate) as month, YEAR(DeviceRowData.WorkDate) as year, 
@@ -186,9 +200,9 @@ if(isset($unit)){
                 AND EmployeePIMSinfo.[Staff Category]='STAFF'
                 
                 GROUP BY EmployeePIMSinfo.[Staff Category], DeviceRowData.WorkDate) as t3
-                ON t1.day=t3.day
+                ON t0.day=t3.day
 
-                ORDER BY t1.day";
+                ORDER BY t0.day";
 
     $result_present1 = mssql_query($SQL_PRESENT1);
 
